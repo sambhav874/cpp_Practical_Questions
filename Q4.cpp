@@ -1,187 +1,116 @@
 #include <iostream>
+
 using namespace std;
-#include <string>
-#include <cctype>
 
-void add_1(string text){
-    int count;
-    count=0;  
-                
-    for(int i=0;i<text.length();i++){
-    
-                cout<<text[i]<<"--"<<count++<<endl;
-               
-    }
-}
-void concatenate(string str1, string str2){
-    
-    cout<<str1<<str2;
-}
-
-void compare(string str1,string str2){
-    int str3;
-    str3=str1.compare(str2);
-    if(str3<0){
-        cout<<str1<<" is smaller than "<<str2<<endl;
-    }
-    else if(str3>0){
-        cout<<str1<<" is greater than "<<str2<<endl;
-    }
-    else{
-        cout<<"Both are equal."<<endl;
+// Function to show address of each character in a string
+void showAddress(const char* str) {
+    for (int i = 0; str[i] != '\0'; i++) {
+        cout << "Address of " << str[i] << ": " << (void*)&str[i] << endl;
     }
 }
 
-void length(string str){
-    int count=0;
-    char *ptr;
-
-    ptr=&str[0];
-   while(*ptr){
-    count++;
-    ptr++;
+// Function to calculate the length of a string
+int calculateLength(const char* str) {
+    int length = 0;
+    while (str[length] != '\0') {
+        length++;
     }
-    cout<<"The length of the string is "<<count<<endl;
-//* operator is used to refer to a pointer.
-//& operator is used to initialize a pointer.
+    return length;
 }
 
-void toUpperCase(string str){
-    
-  // Loop through each character in the string
-  for (int i = 0; i < str.length(); i++) {
-    // If the character is lowercase, convert it to uppercase
-    if (islower(str[i])) {
-      str[i] = toupper(str[i]);
+// Function to compare two strings
+bool compareStrings(const char* str1, const char* str2) {
+    int i = 0;
+    while (str1[i] != '\0' || str2[i] != '\0') {
+        if (str1[i] != str2[i]) {
+            return false;
+        }
+        i++;
     }
-  }
-  
-  // Print the modified string
-  cout << str << endl;
-
+    return true;
 }
 
-void reverse(string str){
+// Function to convert all lowercase characters to uppercase
+void convertToUppercase(char* str) {
+    for (int i = 0; str[i] != '\0'; i++) {
+        if (str[i] >= 'a' && str[i] <= 'z') {
+            str[i] = str[i] - ('a' - 'A');
+        }
+    }
+}
 
-    for(int i=str.length();i>=0;i--){
-        cout<<str[i];
+// Function to reverse a string
+void reverseString(char* str) {
+    int length = calculateLength(str);
+    int start = 0;
+    int end = length - 1;
+    while (start < end) {
+        char temp = str[start];
+        str[start] = str[end];
+        str[end] = temp;
+        start++;
+        end--;
+    }
+}
+
+int main() {
+    char str1[100];
+    char str2[100];
+    int choice;
+
+    cout << "Enter string 1: ";
+    cin.getline(str1, 100);
+
+    cout << "Enter string 2: ";
+    cin.getline(str2, 100);
+
+    cout << "Menu:\n";
+    cout << "1. Show address of each character in string\n";
+    cout << "2. Concatenate two strings\n";
+    cout << "3. Compare two strings\n";
+    cout << "4. Calculate length of the string\n";
+    cout << "5. Convert all lowercase characters to uppercase\n";
+    cout << "6. Reverse the string\n";
+    cout << "Enter your choice: ";
+    cin >> choice;
+
+    switch (choice) {
+        case 1:
+            cout << "String 1:\n";
+            showAddress(str1);
+            cout << "String 2:\n";
+            showAddress(str2);
+            break;
+        case 2:
+            strcat(str1, str2);
+            cout << "Concatenated string: " << str1 << endl;
+            break;
+        case 3:
+            if (compareStrings(str1, str2)) {
+                cout << "Strings are equal\n";
+            } else {
+                cout << "Strings are not equal\n";
+            }
+            break;
+        case 4:
+            cout << "Length of string 1: " << calculateLength(str1) << endl;
+            cout << "Length of string 2: " << calculateLength(str2) << endl;
+            break;
+        case 5:
+            convertToUppercase(str1);
+            convertToUppercase(str2);
+            cout << "Uppercase string 1: " << str1 << endl;
+            cout << "Uppercase string 2: " << str2 << endl;
+            break;
+        case 6:
+            reverseString(str1);
+            reverseString(str2);
+            cout << "Reversed string 1: " << str1 << endl;
+            cout << "Reversed string 2: " << str2 << endl;
+            break;
+        default:
+            cout << "Invalid choice\n";
     }
 
-}
-
-void addAtAddress(int position,string str,string mainStr){
-
-
-    mainStr.insert(position,str);
-    cout<<mainStr;
-    
-
-
-}
-    
-    
-
-
-void menu(){
-    int input;
-    string str;
-    string str1;
-    string str2;
-    string mainStr;
-    int position;
-    cout<<"\n\n\t\tEnter the function you want to perform.\t\t\n\n"
-    <<"1--- To know the address of each character in string\t\t\n\n"
-    <<"2--- Concatenate two strings.\t\t\n\n"
-    <<"3--- Compare two strings.\t\t\n\n"
-    <<"4--- To calculate length of the string.\t\t\n\n"
-    <<"5--- To convert all lowercase characters to uppercase.\t\t\n\n"
-    <<"6--- To reverse the string.\t\t\n\n"
-    <<"7--- Insert a string in another string at a user specified position.\t\t\n\n"
-;
-    cin>>input;
-    switch (input)
-    {
-    case 1:
-        cout<<"Enter a string."<<endl;
-        cin>>str;
-        add_1(str);
-        cout<<endl;
-        break;
-    
-    case 2:
-        cout<<"Enter string 1."<<endl;
-        cin>>str1;
-        cout<<"Enter string 2."<<endl;
-        cin>>str2;
-        concatenate(str1,str2);
-        cout<<endl;
-        break;
-    
-
-    case 3:
-        cout<<"Enter string 1."<<endl;
-        cin>>str1;
-        cout<<"Enter string 2."<<endl;
-        cin>>str2;
-        compare(str1,str2);
-        cout<<endl;
-        break;
-    
-
-    case 4:
-        cout<<"Enter a string ."<<endl;
-        cin>>str;
-        cout<<endl;
-        length(str);
-        cout<<endl;
-        break;
-    
-
-    case 5:
-        cout<<"Enter a string ."<<endl;
-        cin>>str;
-        cout<<endl;
-        cout<<"The string looks like ";
-        toUpperCase(str);
-        cout<<endl;
-        break;
-
-    case 6:
-        cout<<"Enter a string ."<<endl;
-        cin>>str;
-        cout<<endl;
-        cout<<"The string looks like ";
-        reverse(str);
-        cout<<endl;
-        break;
-    
-
-    case 7:
-        cout<<"Enter string in which you want to add ."<<endl;
-        cin>>mainStr;
-        cout<<endl;
-        cout<<"Enter string you want to add ."<<endl;
-        cin>>str;
-        cout<<endl;
-        cout<<"Enter the position where you want to add ."<<endl;
-        cin>>position;
-        cout<<endl;
-        cout<<"The string looks like ";
-        addAtAddress(position,str,mainStr);
-        cout<<endl;
-        break;
-    
-
-    default:
-        cout<<"Invalid input.";
-        break;
-    }
-    
-}
-
-
-
-int main(){
-    menu();
-    
+    return 0;
 }
